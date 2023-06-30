@@ -1,5 +1,5 @@
 import React, { Component } from "react"; 
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 
 export class Employee extends Component{
     constructor(props){
@@ -19,13 +19,15 @@ export class Employee extends Component{
     render(){
         const {employee}= this.state
         return(
+            <>
             <Table mt-4 striped bordered hover size="sm">
                 <thead>
                     <th>EmployeeID</th>
                     <th>Employee Name</th>
-                    <th>Employee Email Address</th>
+                    <th>Email Address</th>
                     <th>Employee DOJ</th>
-                    <th>DepartmentName</th>
+                    <th>Department</th>
+                    
                 </thead>
                 <tbody>
                 {employee.map(employees=>
@@ -35,13 +37,19 @@ export class Employee extends Component{
                         <td>{employees.emailID}</td>
                         <td>{employees.doj}</td>
                         <td>{employees.departmentName}</td>
+                        <tr>
+                     <Button variant="info">View</Button>      
+                      <Button variant="secondary">Edit</Button>
+                      <Button variant="danger">Delete</Button>
+                      </tr>
                        
                         </tr>
                     )}
 
                 </tbody>
             </Table>
-           
+             <Button variant="secondary">Add New Employee</Button>
+             </>
         )
     }
 }
