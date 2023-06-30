@@ -6,6 +6,9 @@ import { AddEmployee } from "./AddModal";
   const [employee, setEmployee] = useState([]);
   const [show, setShow] = useState(false);
 
+
+  
+
   useEffect(() => {
     refreshList();
   }, []);
@@ -65,9 +68,8 @@ import { AddEmployee } from "./AddModal";
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Add Employee
-          </Button>
+         
+          
         </Modal.Footer>
       </Modal>
     </>

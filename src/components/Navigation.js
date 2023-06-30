@@ -7,7 +7,7 @@ import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 export class Navigation extends Component{
     render(){
         return(
-            <Navbar bg="dark" expand="lg">
+            <Navbar bg="red" expand="lg">
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <NavbarCollapse id="basic-navbar-nav">
                 <Nav>

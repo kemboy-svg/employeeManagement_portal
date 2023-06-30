@@ -47,7 +47,7 @@ import { AddForm } from "./AddModal";
         Add New Department
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} >
         <Modal.Header closeButton>
           <Modal.Title>New Department</Modal.Title>
         </Modal.Header>
@@ -58,9 +58,7 @@ import { AddForm } from "./AddModal";
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Add Department
-          </Button>
+          
         </Modal.Footer>
       </Modal>
     </>
