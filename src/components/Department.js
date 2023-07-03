@@ -17,7 +17,7 @@ import { AddForm } from "./AddModal";
         setDepart(data);
       });
   };
-
+  refreshList();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 

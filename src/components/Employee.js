@@ -7,9 +7,7 @@ import { AddEmployee } from "./AddModal";
   const [show, setShow] = useState(false);
 
 
-  
-
-  useEffect(() => {
+   useEffect(() => {
     refreshList();
   }, []);
 
@@ -20,7 +18,7 @@ import { AddEmployee } from "./AddModal";
         setEmployee(data);
       });
   };
-
+  refreshList();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
