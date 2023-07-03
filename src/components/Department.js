@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Modal } from "react-bootstrap";
 import { AddForm } from "./AddModal";
+import { EditForm } from "./EditModal";
 
- export const Department = () => {
-  const [depart, setDepart] = useState([]);
+export const Department = () => {
+  const [departmentData, setDepartmentData] = useState([]);
   const [show, setShow] = useState(false);
+  const [selectedDept, setSelectedDept] = useState(null);
 
   useEffect(() => {
     refreshList();
@@ -14,12 +16,21 @@ import { AddForm } from "./AddModal";
     fetch("https://localhost:7282/api/Departmentview")
       .then((response) => response.json())
       .then((data) => {
-        setDepart(data);
+        setDepartmentData(data);
       });
   };
-  refreshList();
-  const handleClose = () => setShow(false);
+
+  const handleClose = () => {
+    setShow(false);
+    setSelectedDept(null);
+  };
+
   const handleShow = () => setShow(true);
+
+  const handleEdit = (dept) => {
+    setSelectedDept(dept);
+    setShow(true);
+  };
 
   return (
     <>
@@ -31,12 +42,17 @@ import { AddForm } from "./AddModal";
           </tr>
         </thead>
         <tbody>
-          {depart.map((departs) => (
-            <tr key={departs.DepartmentID}>
-              <td>{departs.id}</td>
-              <td>{departs.departmentName}</td>
+          {departmentData.map((dept) => (
+            <tr key={dept.DepartmentID}>
+              <td>{dept.id}</td>
+              <td>{dept.departmentName}</td>
               <td>
-                <Button variant="secondary">Edit</Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => handleEdit(dept)}
+                >
+                  Edit
+                </Button>
                 <Button variant="danger">Delete</Button>
               </td>
             </tr>
@@ -47,18 +63,30 @@ import { AddForm } from "./AddModal";
         Add New Department
       </Button>
 
-      <Modal show={show} onHide={handleClose} >
-        <Modal.Header closeButton>
-          <Modal.Title>New Department</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <AddForm />
-        </Modal.Body>
+      <Modal show={show} onHide={handleClose}>
+        {selectedDept ? (
+          <>
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Department</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <EditForm theDept={selectedDept} />
+            </Modal.Body>
+          </>
+        ) : (
+          <>
+            <Modal.Header closeButton>
+              <Modal.Title>New Department</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <AddForm />
+            </Modal.Body>
+          </>
+        )}
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          
         </Modal.Footer>
       </Modal>
     </>
