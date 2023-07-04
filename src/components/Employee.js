@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Modal } from "react-bootstrap";
 import { AddEmployee } from "./AddModal";
+import { EditEmployee } from "./EditModal";
+
 
  export const Employee = () => {
   const [employee, setEmployee] = useState([]);
   const [show, setShow] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
   
 
 
@@ -19,9 +22,38 @@ import { AddEmployee } from "./AddModal";
         setEmployee(data);
       });
   };
-  refreshList();
-  const handleClose = () => setShow(false);
+  // refreshList();
+  const handleClose = () => {
+    setShow(false);
+    setSelectedEmployee(null);
+  };
   const handleShow = () => setShow(true);
+
+  const handleEdit = (dept) => {
+    setSelectedEmployee(dept);
+    setShow(true);
+  };
+
+   const deleteUser = (Id) => {
+    fetch(`https://localhost:7282/api/DeleteEmployee?${Id}`, {
+      method: "DELETE",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+      
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        alert(result);
+        
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+        alert("An error occurred while deleting the user.");
+      });
+  };
+  
 
   return (
     <>
@@ -44,9 +76,9 @@ import { AddEmployee } from "./AddModal";
               <td>{employees.doj}</td>
               <td>{employees.departmentName}</td>
               <td>
-                <Button variant="info">View</Button>
-                <Button variant="secondary">Edit</Button>
-                <Button variant="danger">Delete</Button>
+                <Button size="sm" variant="info">View</Button>
+                <Button variant="secondary" onClick={() => handleEdit(employees)}>Edit</Button>
+                <Button variant="danger" onClick={deleteUser}>Delete </Button>
               </td>
             </tr>
           ))}
@@ -57,18 +89,29 @@ import { AddEmployee } from "./AddModal";
       </Button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>New Employee</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <AddEmployee />
-        </Modal.Body>
+        {selectedEmployee ? (
+          <>
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Employee Details</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <EditEmployee theEmployee={selectedEmployee} />
+            </Modal.Body>
+          </>
+        ) : (
+          <>
+            <Modal.Header closeButton>
+              <Modal.Title>New Employee </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <AddEmployee />
+            </Modal.Body>
+          </>
+        )}
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-         
-          
         </Modal.Footer>
       </Modal>
     </>

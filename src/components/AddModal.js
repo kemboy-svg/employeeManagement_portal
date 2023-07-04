@@ -1,18 +1,22 @@
-import { Form,FormLabel, Button } from "react-bootstrap";
+import { Form,FormLabel, Button} from "react-bootstrap";
+
 
 
 export const AddDepartment = () => {
-
+    
     const handleSubmit = (event) => {
       event.preventDefault();
+      
+      
       const form =event.target;
       const departmentName = form.elements["DepartmentName"].value;
       
   
       fetch("https://localhost:7282/api/Department", {
+        
         method: "POST",
         headers: {
-          Accept: "application/json",
+          'Accept': "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -29,7 +33,7 @@ export const AddDepartment = () => {
           alert("An error occurred while adding the department. 1111");
         });
     };
-  
+    
     return (
       <Form onSubmit={handleSubmit}>
         <Form.Group>
@@ -57,12 +61,10 @@ export const AddDepartment = () => {
       const dateOfReport = form.elements["DOJ"].value;
       const department = form.elements["DepartmentName"].value;
     
-    
-
-    fetch("https://localhost:7282/api/Employees", {
+     fetch("https://localhost:7282/api/Employees", {
         method: "POST",
         headers: {
-          Accept: "application/json",
+         'Accept' : "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({

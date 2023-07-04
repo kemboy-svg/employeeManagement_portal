@@ -32,6 +32,7 @@ export const Department = () => {
     setShow(true);
   };
 
+
   return (
     <>
       <Table mt-4 striped bordered hover size="sm">
