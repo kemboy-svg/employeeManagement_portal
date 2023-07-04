@@ -1,7 +1,7 @@
 import { Form,FormLabel, Button } from "react-bootstrap";
 
 
-export const EditForm = ({theDept}) => {
+export const EditDepartment = ({theDept}) => {
 
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -50,7 +50,6 @@ export const EditForm = ({theDept}) => {
             type="text"
             placeholder="Department *"
             name="DepartmentName"
-            // defaultValue={this.departs.departmentName}
             defaultValue={theDept.departmentName}
             required
           />

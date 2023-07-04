@@ -1,7 +1,7 @@
 import { Form,FormLabel, Button } from "react-bootstrap";
 
 
-export const AddForm = () => {
+export const AddDepartment = () => {
 
     const handleSubmit = (event) => {
       event.preventDefault();

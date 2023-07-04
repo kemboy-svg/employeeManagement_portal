@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Modal } from "react-bootstrap";
-import { AddForm } from "./AddModal";
-import { EditForm } from "./EditModal";
+import { AddDepartment } from "./AddModal";
+import { EditDepartment } from "./EditModal";
 
 export const Department = () => {
   const [departmentData, setDepartmentData] = useState([]);
@@ -70,7 +70,7 @@ export const Department = () => {
               <Modal.Title>Edit Department</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <EditForm theDept={selectedDept} />
+              <EditDepartment theDept={selectedDept} />
             </Modal.Body>
           </>
         ) : (
@@ -79,7 +79,7 @@ export const Department = () => {
               <Modal.Title>New Department</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <AddForm />
+              <AddDepartment />
             </Modal.Body>
           </>
         )}

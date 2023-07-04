@@ -5,6 +5,7 @@ import { AddEmployee } from "./AddModal";
  export const Employee = () => {
   const [employee, setEmployee] = useState([]);
   const [show, setShow] = useState(false);
+  
 
 
    useEffect(() => {
