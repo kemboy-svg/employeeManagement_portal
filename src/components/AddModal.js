@@ -1,89 +1,127 @@
-import { Form,FormLabel, Button} from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, FormLabel, Button, Spinner } from "react-bootstrap";
+// import { Department } from "./Department";
 
-
-
-export const AddDepartment = () => {
-    
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      
-      
-      const form =event.target;
-      const departmentName = form.elements["DepartmentName"].value;
-      
+export const AddDepartment = ({ addDept }) => {
+  const [isLoading, setIsLoading] = useState(false);
   
-      fetch("https://localhost:7282/api/Department", {
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+
+    const form = event.target;
+    const departmentName = form.elements["DepartmentName"].value;
+
+    try {
+      const resp = await addDept(departmentName);
+
+      if (resp) {
+        setIsLoading(false);
+      }
+    } catch (e) {
+      
+    }
+    // fetch("https://localhost:7282/api/Department", {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     DepartmentName: departmentName,
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((result) => {
+    //     alert(result);
+    //     setIsLoading(false);
+    //     // utils.refreshList();
         
-        method: "POST",
-        headers: {
-          'Accept': "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-        //   DepartmentID: null,
-          DepartmentName: departmentName
-        }),
-      })
-        .then((res) => res.json())
-        .then((result) => {
-          alert(result);
-        })
-        .catch((error) => {
-          console.log("Error:", error);
-          alert("An error occurred while adding the department. 1111");
-        });
-    };
+        
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error:", error);
+    //     alert("An error occurred while adding the department.");
+    //   })
     
-    return (
-      <Form onSubmit={handleSubmit}>
-        <Form.Group>
-          <FormLabel>Department Name</FormLabel>
-          <Form.Control
-            type="text"
-            placeholder="Department *"
-            name="DepartmentName"
-            required
-          />
-        </Form.Group>
-        <Button type="submit">Add Department</Button>
-      </Form>
-    );
   };
+
+  return (
+    <Form  onSubmit={handleSubmit}>
+      <Form.Group>
+        <FormLabel>Department Name</FormLabel>
+        <Form.Control
+          type="text"
+          placeholder="Department *"
+          name="DepartmentName"
+          required
+        />
+      </Form.Group>
+      <Button type="submit" disabled={isLoading}>
+        {isLoading ? (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        ) : (
+          "Add Department"
+        )}
+      </Button>
+    </Form>
+  );
+};
+
   
-  
-  export const AddEmployee = () => {
-    const handleSubmit = (event) => {
+  export const AddEmployee = ({addEmployee}) => {
+  const[isLoading, setIsLoading]=useState(false);
+
+    const handleSubmit = async (event) => {
+      setIsLoading(true);
       event.preventDefault();
       const form = event.target;
+      
       
       const employeeName = form.elements["EmployeeName"].value;
       const email = form.elements["EmailID"].value;
       const dateOfReport = form.elements["DOJ"].value;
       const department = form.elements["DepartmentName"].value;
-    
-     fetch("https://localhost:7282/api/Employees", {
-        method: "POST",
-        headers: {
-         'Accept' : "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-        //   DepartmentID: null,
-          EmployeeName:employeeName,
-          EmailID:email,
-          DOJ:dateOfReport,
-          DepartmentName: department
-        }),
-      })
-        .then((res) => res.json())
-        .then((result) => {
-          alert(result);
-        })
-        .catch((error) => {
-          console.log("Error:", error);
-          alert("An error occurred while adding the department. 1111");
-        });
+
+      try {
+        const res = await addEmployee(employeeName,email,dateOfReport,department);
+  
+        if (res) {
+          setIsLoading(false);
+        }
+      } catch (e) {
+        
+      }
     }
+    
+    //  fetch("https://localhost:7282/api/Employees", {
+    //     method: "POST",
+    //     headers: {
+    //      'Accept' : "application/json",
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //     //   DepartmentID: null,
+    //       EmployeeName:employeeName,
+    //       EmailID:email,
+    //       DOJ:dateOfReport,
+    //       DepartmentName: department
+    //     }),
+    //   })
+    //     .then((res) => res.json())
+    //     .then((result) => {
+    //       alert(result);
+    //       setIsLoading(false);
+
+    //     })
+    //     .catch((error) => {
+    //       console.log("Error:", error);
+    //       alert("An error occurred while adding the department. 1111");
+    //     });
+    
   
 
   
@@ -109,7 +147,15 @@ export const AddDepartment = () => {
           <Form.Label>Department</Form.Label>
           <Form.Control type="text" name="DepartmentName" placeholder="@software" required />
         </Form.Group>
-        <Button type="submit">Add Employee</Button>
+        <Button type="submit" disabled={isLoading}>
+        {isLoading ? (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        ) : (
+          "Add Employee"
+        )}
+      </Button>
       </Form>
     );
   };

@@ -1,24 +1,52 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Modal } from "react-bootstrap";
+import { Table, Button, Modal,Spinner } from "react-bootstrap";
 import { AddDepartment } from "./AddModal";
 import { EditDepartment } from "./EditModal";
 
-export const Department = () => {
+ export const Department = () => {
+  const[isLoading, setIsLoading]=useState(false);
   const [departmentData, setDepartmentData] = useState([]);
   const [show, setShow] = useState(false);
   const [selectedDept, setSelectedDept] = useState(null);
 
   useEffect(() => {
     refreshList();
+    setIsLoading(true);
   }, []);
-
+  
   const refreshList = () => {
     fetch("https://localhost:7282/api/Departmentview")
       .then((response) => response.json())
       .then((data) => {
         setDepartmentData(data);
+        setIsLoading(false);
       });
   };
+ 
+  const addDept = async (departmentName) => {
+    try {
+      
+      fetch("https://localhost:7282/api/Department", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        DepartmentName: departmentName,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        alert(result);
+        refreshList();
+        return true;
+      })
+    } catch (error) {
+      console.log("Error:", error);
+      alert("An error occurred while adding the department.");
+    }
+  }
 
   const handleClose = () => {
     setShow(false);
@@ -32,10 +60,44 @@ export const Department = () => {
     setShow(true);
   };
 
+  const deleteUser = (id) => {
+    if (window.confirm('Are you sure?')){
+      fetch(`https://localhost:7282/api/Delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+      
+      
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        alert(result);
+        refreshList();
+        
+        
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+        alert("An error occurred while deleting the user.");
+      });
+    }
+  };
+  
+
 
   return (
     <>
-      <Table mt-4 striped bordered hover size="sm">
+      <Table mt-4 striped bordered hover size="sm" disabled={isLoading}>
+      {isLoading ? (
+        <>
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+          </>
+        ):(
+          <>
         <thead>
           <tr>
             <th>DepartmentID</th>
@@ -54,11 +116,13 @@ export const Department = () => {
                 >
                   Edit
                 </Button>
-                <Button variant="danger">Delete</Button>
+                <Button variant="danger" onClick={() => {deleteUser(dept.id)}}>Delete</Button>
               </td>
             </tr>
           ))}
         </tbody>
+        </>
+        )}
       </Table>
       <Button onClick={handleShow} variant="secondary">
         Add New Department
@@ -80,7 +144,7 @@ export const Department = () => {
               <Modal.Title>New Department</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <AddDepartment />
+              <AddDepartment addDept={addDept} />
             </Modal.Body>
           </>
         )}
@@ -92,6 +156,6 @@ export const Department = () => {
       </Modal>
     </>
   );
+  
 };
 
-export default Department;
