@@ -15,12 +15,19 @@ import { EditDepartment } from "./EditModal";
   }, []);
   
   const refreshList = () => {
+   try {
     fetch("https://localhost:7282/api/Departmentview")
-      .then((response) => response.json())
-      .then((data) => {
-        setDepartmentData(data);
-        setIsLoading(false);
-      });
+    .then((response) => response.json())
+    .then((data) => {
+      setDepartmentData(data);
+      setIsLoading(false);
+    });
+    
+   } catch (error) {
+    console.log("Error:", error);
+    alert("An error occured.");
+
+   }
   };
  
   const addDept = async (departmentName) => {
@@ -40,6 +47,7 @@ import { EditDepartment } from "./EditModal";
       .then((result) => {
         alert(result);
         refreshList();
+        handleClose();
         return true;
       })
     } catch (error) {
@@ -59,6 +67,11 @@ import { EditDepartment } from "./EditModal";
     setSelectedDept(dept);
     setShow(true);
   };
+
+
+
+
+
 
   const deleteUser = (id) => {
     if (window.confirm('Are you sure?')){

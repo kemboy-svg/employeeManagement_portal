@@ -1,7 +1,7 @@
 import { Form,FormLabel, Button } from "react-bootstrap";
 
 
-export const EditDepartment = ({ theDept }) => {
+export const EditDepartment = ({ theDept, EditDetails }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -79,12 +79,7 @@ export const EditDepartment = ({ theDept }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            // EmployeeID: Id,
-            // EmployeeName: employeeName,
-            // EmailID: email,
-            // DOJ: dateOfReport,
-            // DepartmentName: department,
-            
+           
               id: Id,
               employeeName: employeeName,
               emailID: email,

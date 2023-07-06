@@ -35,6 +35,7 @@ import { ViewEmployee } from "./ViewEmployee";
   };
   
    const addEmployee =async(employeeName,email,dateOfReport,department)=>{
+   
     try {
       fetch("https://localhost:7282/api/Employees", {
         method: "POST",
@@ -55,6 +56,7 @@ import { ViewEmployee } from "./ViewEmployee";
           alert(result);
           setIsLoading(false);
           refreshList();
+          handleClose();
 
         })
       
@@ -143,7 +145,7 @@ import { ViewEmployee } from "./ViewEmployee";
               <td>{employees.departmentName}</td>
               <td>
                 <Button size="sm" variant="info" onClick={()=>handleView(employees)}>View</Button>
-                <Button variant="secondary" onClick={() => handleEdit(employees)}>Edit</Button>
+                <Button variant="secondary" onClick={() => handleEdit()}>Edit</Button>
                 <Button variant="danger" onClick={() => {deleteUser(employees.id)}}>Delete </Button>
               </td>
             </tr>
@@ -199,120 +201,9 @@ import { ViewEmployee } from "./ViewEmployee";
           
         </Modal.Footer>
       </Modal>
-
-
-
-
       
     </>
-
-
-
-
-
-
-
 
   );
 };
  
-
-
-
-
-// import React, { useState } from "react";
-// import { Form, Button, Spinner, Modal } from "react-bootstrap";
-
-// export const AddEmployee = () => {
-//   const [isLoading, setIsLoading] = useState(false);
-//   const [showModal, setShowModal] = useState(false);
-
-//   const handleSubmit = (event) => {
-//     setIsLoading(true);
-//     event.preventDefault();
-//     const form = event.target;
-
-//     const employeeName = form.elements["EmployeeName"].value;
-//     const email = form.elements["EmailID"].value;
-//     const dateOfReport = form.elements["DOJ"].value;
-//     const department = form.elements["DepartmentName"].value;
-
-//     fetch("https://localhost:7282/api/Employees", {
-//       method: "POST",
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({
-//         EmployeeName: employeeName,
-//         EmailID: email,
-//         DOJ: dateOfReport,
-//         DepartmentName: department,
-//       }),
-//     })
-//       .then((res) => res.json())
-//       .then((result) => {
-//         console.log("Employee added successfully", result);
-//         setIsLoading(false);
-//         setShowModal(true);
-//       })
-//       .catch((error) => {
-//         console.log("Error:", error);
-//         alert("An error occurred while adding the employee.");
-//       });
-//   };
-
-//   const handleCloseModal = () => {
-//     setShowModal(false);
-//   };
-
-//   return (
-//     <>
-//       <Form onSubmit={handleSubmit}>
-//       <Form.Group className="mb-3">
-//           <Form.Label>Employee Name</Form.Label>
-//           <Form.Control type="text" name="EmployeeName" placeholder="James Doe" required />
-//         </Form.Group>
-//         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-//           <Form.Label>Email address</Form.Label>
-//           <Form.Control
-//             type="email"
-//             name="EmailID"
-//             placeholder="name@example.com"
-//           />
-//         </Form.Group>
-//         <Form.Group className="mb-3">
-//           <Form.Label>Date of Report</Form.Label>
-//           <Form.Control type="Date" name="DOJ" placeholder="name@example.com" required />
-//         </Form.Group>
-//         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-//           <Form.Label>Department</Form.Label>
-//           <Form.Control type="text" name="DepartmentName" placeholder="@software" required />
-//         </Form.Group>
-//         <Button type="submit" disabled={isLoading}>
-//           {isLoading ? (
-//             <Spinner animation="border" role="status">
-//               <span className="visually-hidden">Loading...</span>
-//             </Spinner>
-//           ) : (
-//             "Add Employee"
-//           )}
-//         </Button>
-//       </Form>
-
-//       <Modal show={showModal} onHide={handleCloseModal}>
-//         <Modal.Header closeButton>
-//           <Modal.Title>Success</Modal.Title>
-//         </Modal.Header>
-//         <Modal.Body>
-//           Employee added successfully!
-//         </Modal.Body>
-//         <Modal.Footer>
-//           <Button variant="secondary" onClick={handleCloseModal}>
-//             Close
-//           </Button>
-//         </Modal.Footer>
-//       </Modal>
-//     </>
-//   );
-// };

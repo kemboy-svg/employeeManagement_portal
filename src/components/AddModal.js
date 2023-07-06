@@ -8,7 +8,7 @@ export const AddDepartment = ({ addDept }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
+    
 
     const form = event.target;
     const departmentName = form.elements["DepartmentName"].value;
@@ -22,29 +22,7 @@ export const AddDepartment = ({ addDept }) => {
     } catch (e) {
       
     }
-    // fetch("https://localhost:7282/api/Department", {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     DepartmentName: departmentName,
-    //   }),
-    // })
-    //   .then((res) => res.json())
-    //   .then((result) => {
-    //     alert(result);
-    //     setIsLoading(false);
-    //     // utils.refreshList();
-        
-        
-    //   })
-    //   .catch((error) => {
-    //     console.log("Error:", error);
-    //     alert("An error occurred while adding the department.");
-    //   })
-    
+   
   };
 
   return (

@@ -62,6 +62,7 @@ return (
           name="DepartmentName"
           defaultValue={theEmployee.departmentName}
           required
+          disabled
         />
       </Form.Group>
       
