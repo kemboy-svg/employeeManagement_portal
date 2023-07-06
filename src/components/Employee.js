@@ -9,16 +9,20 @@ import { ViewEmployee } from "./ViewEmployee";
   const[isLoading, setIsLoading]=useState(false);
   const [employee, setEmployee] = useState([]);
   const [show, setShow] = useState(false);
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [selectedEmployee, setSelectedEmployee] = useState();
   const [view ,setView]=useState(false);
+  const [selectedView, setSelectedView]=useState([]);
   
 
 
    useEffect(() => {
-    refreshList();
-    setIsLoading(true);
+    if(!selectedEmployee){
+      refreshList();
+      setIsLoading(true)
+    }
+   
 
-  }, []);
+  }, [selectedEmployee]);
 
   const  refreshList = () => {
 
@@ -77,14 +81,14 @@ import { ViewEmployee } from "./ViewEmployee";
   };
   const handleView = (employees) =>{
     setView(true);
-    setSelectedEmployee(employees);
+    setSelectedView(employees);
 
 
   };
 
 
-  const handleEdit = (dept) => {
-    setSelectedEmployee(dept);
+  const handleEdit = (employees) => {
+    setSelectedEmployee(employees);
     setShow(true);
   };
 
@@ -145,7 +149,7 @@ import { ViewEmployee } from "./ViewEmployee";
               <td>{employees.departmentName}</td>
               <td>
                 <Button size="sm" variant="info" onClick={()=>handleView(employees)}>View</Button>
-                <Button variant="secondary" onClick={() => handleEdit()}>Edit</Button>
+                <Button variant="secondary" onClick={() => handleEdit(employees)}>Edit</Button>
                 <Button variant="danger" onClick={() => {deleteUser(employees.id)}}>Delete </Button>
               </td>
             </tr>
@@ -192,7 +196,7 @@ import { ViewEmployee } from "./ViewEmployee";
           <Modal.Title>Employee Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <ViewEmployee theEmployee={selectedEmployee}/>
+        <ViewEmployee theEmployee={selectedView}/>
         </Modal.Body  >
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

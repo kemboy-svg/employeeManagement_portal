@@ -10,9 +10,12 @@ import { EditDepartment } from "./EditModal";
   const [selectedDept, setSelectedDept] = useState(null);
 
   useEffect(() => {
-    refreshList();
-    setIsLoading(true);
-  }, []);
+    if (!selectedDept) {
+      refreshList();
+      setIsLoading(true);
+    }
+    
+  }, [selectedDept]);
   
   const refreshList = () => {
    try {
