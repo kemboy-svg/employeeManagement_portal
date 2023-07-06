@@ -121,6 +121,18 @@ export const AddDepartment = ({ addDept }) => {
           <Form.Label>Date of Report</Form.Label>
           <Form.Control type="Date" name="DOJ" placeholder="name@example.com" required />
         </Form.Group>
+        {/* <InputGroup className="mb-3">
+        <DropdownButton
+          variant="outline-secondary"
+          title="Choose Department"
+          id="input-group-dropdown-1"
+        >
+          <Dropdown.Item href="#">Action</Dropdown.Item>
+          <Dropdown.Item href="#">Another action</Dropdown.Item>
+          <Dropdown.Item href="#">Something else here</Dropdown.Item>
+          </DropdownButton>
+          </InputGroup> */}
+
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>Department</Form.Label>
           <Form.Control type="text" name="DepartmentName" placeholder="@software" required />

@@ -132,7 +132,7 @@ import { ViewEmployee } from "./ViewEmployee";
         <>
         <thead>
           <tr>
-            <th>EmployeeID</th>
+            {/* <th>EmployeeID</th> */}
             <th>Employee Name</th>
             <th>Email Address</th>
             <th>Employee DOJ</th>
@@ -142,7 +142,7 @@ import { ViewEmployee } from "./ViewEmployee";
         <tbody>
           {employee.map((employees) => (
             <tr key={employees.id}>
-              <td>{employees.id}</td>
+              {/* <td>{employees.id}</td> */}
               <td>{employees.employeeName}</td>
               <td>{employees.emailID}</td>
               <td>{employees.doj}</td>
